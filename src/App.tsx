@@ -1,10 +1,15 @@
 import React from 'react';
-import { Button } from '@mui/material';
+import Login from './login/Login'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
-      <Button variant="contained">Contained</Button>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={Login()} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
