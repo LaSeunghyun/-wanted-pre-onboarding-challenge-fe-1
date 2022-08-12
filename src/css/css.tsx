@@ -15,10 +15,3 @@ export const LoginBox = styled.div`
     border: 1px solid gray;
     border-radius: 5px;
 `;
-
-export const Naming = styled.span`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin : 5px 0;
-`;

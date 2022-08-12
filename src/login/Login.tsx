@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import FormControl from '@mui/material/FormControl'
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-import { Container, LoginBox, Naming } from '../css/css'
+import { Container, LoginBox } from '../css/css'
+import { SignIn } from '../auth/auth'
 
 function Login() {
-    const [input, setInput] = useState({
+    const [inputData, setInputData] = useState({
         email : "",
         password : ""
     });
@@ -14,49 +14,43 @@ function Login() {
 
     const isCheckedHandle = ( (e :React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setInput({
-            ...input,
+        setInputData({
+            ...inputData,
             [name] : value
         })
         
-        const emailCheck = input.email.includes('@') && input.email.includes('.')
-        const pwCheck = input.password.length >= 8;
+        const emailCheck = inputData.email.includes('@') && inputData.email.includes('.')
+        const pwCheck = inputData.password.length >= 7;
         return emailCheck && pwCheck? setChecked(true) : setChecked(false);
     })
 
-    const submitHandle = (e :React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const login = () => {
+        let email = inputData.email;
+        let password = inputData.password;
+        SignIn( { email, password } )
     }
-
+  
     return(
         <Container>
             <LoginBox>
-                <Box
-                component="form"
-                sx={{
-                    '& .MuiTextField-root': { m: 1, width: '25ch' },
-                }}
-                noValidate
-                autoComplete="off"
-                onSubmit={submitHandle}
-                >
-                    <FormControl component="fieldset" variant="standard">
-                    <Naming>이메일 : <TextField
+                <FormControl component="fieldset" variant="standard">
+                    <p>이메일</p>
+                    <TextField
                         name="email"
                         required
                         label="E-Mail"
                         onChange={isCheckedHandle}
-                    /></Naming>
-                    <Naming>비밀번호 : <TextField
+                    />
+                    <p>비밀번호</p>
+                    <TextField
                         name="password"
                         label="Password"
                         type="password"
                         autoComplete="current-password"
                         onChange={isCheckedHandle}
-                    /></Naming>
-                    {isChecked? <Button variant="contained" type="submit">로그인</Button> : <Button variant="contained" className="btn" disabled>로그인</Button>}
-                    </FormControl>
-                </Box>
+                    />
+                    {isChecked? <Button variant="contained" onClick={login} className="btn">로그인</Button> : <Button variant="contained" className="btn" disabled>로그인</Button>}
+                </FormControl>
             </LoginBox>
         </Container>
     )
